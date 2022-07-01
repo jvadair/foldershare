@@ -4,7 +4,11 @@ FolderShare is a simple way to share and receive files across the local network.
 ## How to use
 Run the main.py file inside of the directory you want to share, then use the URL provided. That's it!
 
-    You can also use the build.py file to create an executable that doesn't need python to run. This is also useful for creating a binary that you can place in a directory on your PATH. The build.py file currently only supports Windows and Linux, but has only been tested on Linux.
+    You can also use the build.py file to create an executable that
+    doesn't need python to run. This is also useful for creating a 
+    binary that you can place in a directory on your PATH. The build.py
+    file currently only supports Windows and Linux, but has only been 
+    tested on Linux.
 
 ## License
 Copyright (C) 2022 jvadair
