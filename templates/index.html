@@ -1,0 +1,49 @@
+<html>
+<head>
+    <title>FolderShare</title>
+    <link rel="stylesheet" href="/57471(-455375/css/main.css">
+</head>
+<body>
+<h1>{{root}}/{{ path }}</h1>
+<div class="header">
+    <div class="icon"></div>
+    <div class="filename"><p>Name</p></div>
+    <div class="modified"><p>Date Modified</p></div>
+    <div class="created"><p>Date Created</p></div>
+</div>
+<div class="contents">
+    {% if path != '' %}
+    <div class="item" onclick="window.location.href='../'">
+        <div class="icon">
+            <img src="/57471(-455375/img/icon/back.svg">
+        </div>
+        <p>Go back</p>
+    </div>
+    {% endif %}
+    {% for file in dir.items() %}
+    <div class="item" onclick="window.location.href='{{ file[0] }}/'">
+        <div class="icon">
+            <img src="/57471(-455375/img/icon/{{ file[1]['type'] }}.svg">
+        </div>
+        <div class="filename">
+            <p>{{ file[0] }}</p>
+        </div>
+        <div class="modified">
+            <p>{{ file[1]['modified'] }}</p>
+        </div>
+        <div class="created">
+            <p>{{ file[1]['created'] }}</p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+<form action="upload", method="post" enctype="multipart/form-data">
+    <div class="image-upload">
+        <label for="file-input">
+            <img src="/57471(-455375/img/icon/upload.svg">
+        </label>
+        <input id='file-input' name="file" type="file" onchange="form.submit()"></input>
+    </div>
+</form>
+</body>
+</html>

@@ -1,0 +1,110 @@
+body {
+  width: 100%;
+  margin: 0px;
+}
+
+h1 {
+  padding: 15px;
+  background-color: #2F2F2F;
+  color: white;
+}
+
+.header {
+  display: flex;
+  width: 100%;
+}
+
+.item {
+  width: 100%;
+  display: flex;
+  transition-duration: .1s;
+}
+
+.item .icon {
+  width: 3%;
+}
+
+.item:hover {
+  background-color: #C4CBFD;
+  cursor: pointer;
+}
+
+.item .icon img {
+  width: 100%;
+  height: auto;
+}
+
+.item .filename {
+  width: 75%;
+}
+
+.item .filename p {
+  padding-left: 10px;
+}
+
+.item .modified {
+  width: 11%;
+}
+
+.item .created {
+  width: 11%;
+}
+
+/* .header .icon {
+  width: 3%;
+} */
+
+.header .filename {
+  width: 78%;
+  border: 2px solid darkgrey;
+  border-right: 0px;
+  color: white;
+  padding-left: 15px;
+  background-color: #2F2F2F;
+  border-top: none;
+  border-left: none;
+}
+
+.header .modified {
+  width: 11%;
+  border: 2px solid darkgrey;
+  border-right: 0px;
+  color: white;
+  padding-left: 15px;
+  background-color: #2F2F2F;
+  border-top: none;
+}
+
+.header .created {
+  width: 11%;
+  border: 2px solid darkgrey;
+  color: white;
+  padding-left: 15px;
+  background-color: #2F2F2F;
+  border-top: none;
+  border-right: none;
+}
+
+.image-upload > input
+{
+    display: none;
+}
+
+form .image-upload {
+  background-color: #6273F9;
+  width: min-content;
+  padding: 5px;
+  border-radius: 100%;
+  position: fixed;
+  bottom: 25;
+  right: 25;
+  transition-duration: .1s;
+}
+
+form .image-upload:hover {
+  background-color: #8996FB;
+}
+
+form .image-upload img {
+  cursor: pointer;
+}
