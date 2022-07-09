@@ -1,6 +1,21 @@
 body {
+  display: flex;
+  flex-direction: column;
   width: 100%;
+  height: 100%;
   margin: 0px;
+}
+
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.contents {
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 25px);
 }
 
 h1 {
@@ -107,4 +122,10 @@ form .image-upload:hover {
 
 form .image-upload img {
   cursor: pointer;
+}
+
+.copyright {
+  text-align: center;
+  width: 100%;
+  height: 25px;
 }

@@ -11,32 +11,36 @@
     <div class="modified"><p>Date Modified</p></div>
     <div class="created"><p>Date Created</p></div>
 </div>
-<div class="contents">
-    {% if path != '' %}
-    <div class="item" onclick="window.location.href='../'">
-        <div class="icon">
-            <img src="/57471(-455375/img/icon/back.svg">
+<div class="container">
+    <div class="contents">
+        {% if path != '' %}
+        <div class="item" onclick="window.location.href='../'">
+            <div class="icon">
+                <img src="/57471(-455375/img/icon/back.svg">
+            </div>
+            <p>Go back</p>
         </div>
-        <p>Go back</p>
+        {% endif %}
+        {% for file in dir.items() %}
+        <div class="item" onclick="window.location.href='{{ file[0] }}/'">
+            <div class="icon">
+                <img src="/57471(-455375/img/icon/{{ file[1]['type'] }}.svg">
+            </div>
+            <div class="filename">
+                <p>{{ file[0] }}</p>
+            </div>
+            <div class="modified">
+                <p>{{ file[1]['modified'] }}</p>
+            </div>
+            <div class="created">
+                <p>{{ file[1]['created'] }}</p>
+            </div>
+        </div>
+        {% endfor %}
     </div>
-    {% endif %}
-    {% for file in dir.items() %}
-    <div class="item" onclick="window.location.href='{{ file[0] }}/'">
-        <div class="icon">
-            <img src="/57471(-455375/img/icon/{{ file[1]['type'] }}.svg">
-        </div>
-        <div class="filename">
-            <p>{{ file[0] }}</p>
-        </div>
-        <div class="modified">
-            <p>{{ file[1]['modified'] }}</p>
-        </div>
-        <div class="created">
-            <p>{{ file[1]['created'] }}</p>
-        </div>
-    </div>
-    {% endfor %}
+    <p class="copyright">Copyright (C) 2022 jvadair</p>
 </div>
+{% if not disable_upload_button %}
 <form action="upload", method="post" enctype="multipart/form-data">
     <div class="image-upload">
         <label for="file-input">
@@ -45,5 +49,6 @@
         <input id='file-input' name="file" type="file" onchange="form.submit()"></input>
     </div>
 </form>
+{% endif %}
 </body>
 </html>

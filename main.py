@@ -1,10 +1,67 @@
 #!/bin/python3
-from flask import Flask, render_template, redirect, request, send_from_directory, abort, flash
+from flask import Flask, render_template, redirect, request, send_from_directory, abort, send_file, session
 import os
 from datetime import datetime
 from werkzeug.utils import secure_filename
+from sys import argv
+
+HELP = """
+--help, -h              : Show this message and then exit.
+--disable-uploads, -d   : Disables the dability to upload files.
+--password <str>        : Enables password protection for the server.
+--port, -p <int>        : Changes which port the server runs on
+"""
+# Arg parsing
+# First, merge words so passwords can have spaces
+previous_arg = ''
+new_argv = []
+for arg in argv:
+    if not previous_arg.startswith('-') and not arg.startswith('-'):
+        arg = ' '.join((arg, previous_arg))
+    previous_arg = arg
+long_args = []
+short_args = []
+for arg in argv:
+    if arg.startswith('--'):
+        long_args.append(arg[2:])
+    elif arg.startswith('-'):
+        short_args.append(arg[1:])
+# Arg handling
+if 'help' in long_args or 'h' in short_args:
+    print(HELP)
+    quit()
+if 'disable-uploads' in long_args or 'd' in short_args:
+    DISABLE_UPLOADS = True
+else:
+    DISABLE_UPLOADS = False
+if 'password' in long_args:
+    PASSWORD = argv[argv.index('--password')+1]
+else:
+    PASSWORD = None
+if 'port' in long_args:
+    PORT = int(argv[argv.index('--port')+1])
+elif 'p' in short_args:
+    PORT = int(argv[argv.index('-p')+1])
+else:
+    PORT = 7654
 
 app = Flask(__name__, static_url_path='/57471(-455375')
+
+@app.before_request
+def check_pw():
+    if PASSWORD:
+        base_path = request.path.split('/')[1]
+        if not session.get('authenticated') and not base_path in ('submit_password', '57471(-455375'):
+            return render_template('password.html', failed=False, redirect=request.path)
+
+@app.route('/submit_password', methods=['POST'])
+def validate_pw():
+    pw = request.form.get('password')
+    if pw == PASSWORD:
+        session['authenticated'] = True
+        return redirect(request.args.get('redirect'))
+    else:
+        return render_template('password.html', failed=True, redirect=request.args.get('redirect'))
 
 @app.route('/<path:path>/')  # :path makes it work properly
 def index(path):
@@ -26,10 +83,13 @@ def index(path):
             stats['type'] = 'link'
         fmtdir[file] = stats
 
-    return render_template('index.html', dir=fmtdir, path=path, root=os.path.basename(os.getcwd()))
+    return render_template('index.html', dir=fmtdir, path=path, root=os.path.basename(os.getcwd()), disable_upload_button=DISABLE_UPLOADS)
 
 @app.route('/<path:path>/upload', methods=['POST'])
 def savefile(path):
+    # Makes sure uploads are enabled
+    if DISABLE_UPLOADS:
+        return 'Uploads not allowed', 401
     # check if the post request has the file part
     if 'file' not in request.files:
         print('No file part')
@@ -53,6 +113,10 @@ def main_reroute():
 def upload_reroute():
     return savefile('')
 
+@app.route('/favicon.ico')
+def send_icon():
+    return redirect('/57471(-455375/img/icon.ico')
+
 if __name__ == '__main__':
     app.secret_key = os.urandom(16)
-    app.run(host='0.0.0.0', port='7654')
+    app.run(host='0.0.0.0', port=PORT)
